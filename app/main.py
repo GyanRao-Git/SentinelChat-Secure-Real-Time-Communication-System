@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from app.core.config import env_settings
+from models.users import AuthObject
 
 app = FastAPI()
 
@@ -10,3 +11,7 @@ async def health_check():
         "service": env_settings.APP_NAME,
         "version": env_settings.VERSION
     }
+
+@app.post("/auth")
+async def auth(user:AuthObject):
+    pass
