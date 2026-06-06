@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from app.core.config import env_settings
-from models.users import AuthObject
+from app.core.config import app_settings,db_settings
+from app.auth.router import router as auth_router
 
 app = FastAPI()
 
@@ -8,10 +8,8 @@ app = FastAPI()
 async def health_check():
     return {
         "status": "healthy",
-        "service": env_settings.APP_NAME,
-        "version": env_settings.VERSION
+        "service": app_settings.APP_NAME,
+        "version": app_settings.VERSION
     }
 
-@app.post("/auth")
-async def auth(user:AuthObject):
-    pass
+app.include_router(auth_router, prefix="/auth")
