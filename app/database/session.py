@@ -1,14 +1,17 @@
-from sqlalchemy import create_engine
+import ssl
+from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.ext.asyncio import async_sessionmaker
 from app.core.config import db_settings
 
 DB_URI = db_settings.PG_CONNECTION_STRING
+ssl_context = ssl.create_default_context()
 
 # adding "+asyncpg", used when sqlalchemy parses URI and figures out database(pg), driver(asyncpg).. etc
 new_URI = DB_URI.replace("postgresql://", "postgresql+asyncpg://")
 
-engine = create_engine(
+engine = create_async_engine(
     new_URI, 
+    connect_args={"ssl": ssl_context},
     echo=True,  # logs all SQL queries to console (useful for debugging)
     pool_pre_ping=True,  # checks if DB connection is alive before using it
     pool_size=5,  # number of persistent connections kept open in the pool
