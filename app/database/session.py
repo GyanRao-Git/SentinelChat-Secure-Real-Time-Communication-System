@@ -18,7 +18,7 @@ engine = create_engine(
     pool_recycle=1800
 )
 
-session = async_sessionmaker(
+SessionLocal = async_sessionmaker(
     bind= engine,
     expire_on_commit= False, #reuse the same values and not pull from db evertime
 )
