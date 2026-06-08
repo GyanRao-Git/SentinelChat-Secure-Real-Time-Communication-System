@@ -1,4 +1,9 @@
 def password_validator(value:str):
+    """
+        validate password function for pydantic 
+        input : password string
+        output: valid password or error 
+    """
     if len(value) < 8:
         raise ValueError("Password must be at least 8 characters long")
 
